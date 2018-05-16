@@ -211,3 +211,40 @@ alias dbmu='spring rake db:migrate:up'
 
 # Homebrew
 alias brewu='brew update  && brew upgrade && brew cleanup && brew prune && brew doctor'
+
+#-----
+# Custom
+alias subl=sublime
+alias tc=~/Desktop/Coding/thinkCERCA/
+alias ag='alias | grep'
+alias ss='spring stop'
+alias hrcp='heroku run rails c -a thinkcerca'
+alias be='bundle exec'
+
+tcrp () {
+  rm ../dbs/production.pg_backup;
+  curl --output ../dbs/production.pg_backup `heroku pg:backups public-url -a thinkcerca`;
+  pg_restore --dbname=tc_prod --jobs=4 --verbose --clean --host=0.0.0.0 --port=5432 --user=postgres ../dbs/production.pg_backup;
+  rake sunspot:reindex
+}
+tcrpr () { pg_restore --dbname=tc_prod --jobs=4 --verbose --clean --host=0.0.0.0 --port=5432 --user=postgres ../dbs/production.pg_backup }
+
+tcrs () {
+  rm ../dbs/stage.pg_backup;
+  curl --output ../dbs/stage.pg_backup `heroku pg:backups public-url -a thinkcerca-stage`;
+  pg_restore --dbname=tc_stage --jobs=4 --verbose --clean --host=0.0.0.0 --port=5432 --user=postgres ../dbs/stage.pg_backup;
+  rake sunspot:reindex
+}
+tcrsr () { pg_restore --dbname=tc_stage --jobs=4 --verbose --clean --host=0.0.0.0 --port=5432 --user=postgres ../dbs/stage.pg_backup }
+
+tcrd () {
+  rm ../dbs/dev.pg_backup;
+  curl --output ../dbs/dev.pg_backup `heroku pg:backups public-url -a thinkcerca-dev`;
+  pg_restore --dbname=tc_dev --jobs=4 --verbose --clean --host=0.0.0.0 --port=5432 --user=postgres ../dbs/dev.pg_backup;
+  rake sunspot:reindex
+}
+tcrdr () { pg_restore --dbname=tc_dev --jobs=4 --verbose --clean --host=0.0.0.0 --port=5432 --user=postgres ../dbs/dev.pg_backup }
+
+gbda () { git branch | grep -v "master" | xargs git branch -D }
+
+sourcez () { source ~/.zshrc }
