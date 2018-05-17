@@ -220,6 +220,9 @@ alias ag='alias | grep'
 alias ss='spring stop'
 alias hrcp='heroku run rails c -a thinkcerca'
 alias be='bundle exec'
+alias hrs='heroku run rails s -a thinkcerca'
+alias hrc='heroku run rails c -a thinkcerca'
+alias dc='docker-compose -f docker-compose-dev.yml up'
 
 tcrp () {
   rm ../dbs/production.pg_backup;
